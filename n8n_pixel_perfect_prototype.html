@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>n8n Pixel-Perfect Prototype</title>
+<style>
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f3f4f7;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #1a1d23;
+  color: #fff;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.sidebar h2 {
+  color: #ff6d5a;
+  margin-bottom: 30px;
+}
+.sidebar a {
+  display: block;
+  color: #c7c9ce;
+  text-decoration: none;
+  padding: 10px 0;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.sidebar a:hover {
+  color: #fff;
+}
+
+/* Main Content */
+.main {
+  margin-left: 240px;
+  padding: 30px;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  border: 1px solid #e0e0e0;
+}
+.screen.active {
+  display: block;
+}
+
+/* Boxes */
+.box {
+  background: #fafafa;
+  border: 1px solid #dcdcdc;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* Buttons */
+.btn {
+  background: #ff6d5a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  display: inline-block;
+  font-weight: 600;
+  border: none;
+}
+
+/* Node cards */
+.node {
+  display: inline-block;
+  padding: 15px;
+  margin-right: 20px;
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  width: 120px;
+  text-align: center;
+}
+.node-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.node-sub {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Flow arrows */
+.arrow {
+  display: inline-block;
+  margin-right: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+}
+
+</style>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>n8n</h2>
+  <a href="#" onclick="showScreen('explore')">Explore</a>
+  <a href="#" onclick="showScreen('try')">Try (Mock Mode)</a>
+  <a href="#" onclick="showScreen('configure')">Configure</a>
+  <a href="#" onclick="showScreen('validate')">Validate</a>
+  <a href="#" onclick="showScreen('publish')">Publish</a>
+  <a href="#" onclick="showScreen('adopt')">Adopt + Advocate</a>
+</div>
+
+<div class="main">
+
+<!---------------- SCREEN 1 ---------------->
+<div id="explore" class="screen active">
+  <h2>Explore</h2>
+  <p>Opens n8n • browses Starter Templates</p>
+
+  <div class="box">📝 Notion → Slack</div>
+  <div class="box">📄 Google Sheets → Email</div>
+  <div class="box">🗂 Form Submission → Airtable</div>
+  <div class="box">⏱ Slack Digest</div>
+
+  <button class="btn" onclick="showScreen('try')">Continue</button>
+</div>
+
+<!---------------- SCREEN 2 ---------------->
+<div id="try" class="screen">
+  <h2>Try (Mock Mode)</h2>
+  <p>Opens a template • runs a test</p>
+
+  <div class="box">
+    <strong>Template: Notion → Slack</strong><br>
+    Mock Mode Active (safe sample data)
+  </div>
+
+  <div class="box">
+    <div class="node">
+      <div class="node-title">Trigger</div>
+      <div class="node-sub">cron</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="node">
+      <div class="node-title" style="color:#7b5cff;">Transform</div>
+      <div class="node-sub">mapper</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="node">
+      <div class="node-title">Slack</div>
+      <div class="node-sub">postMessage</div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="showScreen('configure')">Run Mock</button>
+</div>
+
+<!---------------- SCREEN 3 ---------------->
+<div id="configure" class="screen">
+  <h2>Configure</h2>
+  <p>Adjusts fields • connects apps</p>
+
+  <div class="box">⚠ Missing Slack authentication</div>
+  <div class="box">⚠ Mapper missing required fields</div>
+  <div class="box">⚠ Notion key invalid (email mismatch)</div>
+
+  <button class="btn" onclick="showScreen('validate')">Fix & Continue</button>
+</div>
+
+<!---------------- SCREEN 4 ---------------->
+<div id="validate" class="screen">
+  <h2>Validate</h2>
+  <p>Gets workflow • publish ready</p>
+
+  <div class="box">
+    <strong>Go-Live Wizard</strong><br><br>
+    ✔ Validate Credentials<br>
+    ✔ Validate Triggers<br>
+    ✔ Test Run<br><br>
+    <strong style="font-size:18px;">Ready to Publish</strong>
+  </div>
+
+  <button class="btn" onclick="showScreen('publish')">Proceed to Publish</button>
+</div>
+
+<!---------------- SCREEN 5 ---------------->
+<div id="publish" class="screen">
+  <h2>Publish</h2>
+  <p>Clicks “Publish”</p>
+
+  <div class="box">
+    Workflow Published Successfully 🚀<br>
+    Triggers Active • Execution Logs Enabled
+  </div>
+
+  <button class="btn" onclick="showScreen('adopt')">Continue</button>
+</div>
+
+<!---------------- SCREEN 6 ---------------->
+<div id="adopt" class="screen">
+  <h2>Adopt + Advocate</h2>
+  <p>Trusts automation • shares workflows</p>
+
+  <div class="box">
+    🎉 User has adopted n8n automation<br>
+    - Creates more workflows<br>
+    - Shares templates publicly<br>
+    - Contributes to community
+  </div>
+</div>
+
+</div>
+</body>
+</html>
